@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'json'
 require 'pry'
 
 class Scraper
@@ -19,6 +20,13 @@ class Scraper
         #REFACTOR:
         url: item.css("a.tab_item_overlay").collect{ |link| link['href'] }.join,
         }
+    end
+
+    return_array.each do |i|
+      x = i[:url].split("/") #splits the link into individual elements between the /s
+      x.pop #gets rid of the ?info at the end of the link
+      i[:steam_id] = x.last #sets the steam id to the end element of the link
+      i[:url] = x.join("/") #joins the url and saves it without the ?info
     end
 
     #binding.pry
@@ -52,7 +60,15 @@ class Scraper
     return_hash
   end
 
+  def self.get_game_info(steam_id)
+    doc = open("http://store.steampowered.com/api/appdetails/?appids=#{steam_id}")#&filters=basic #uses Open-URI to get the JSON file based on steam ID
+    data_hash = JSON.load(doc) #loads the JSON data
+    #x = data_hash[steam_id.to_s]["data"]["detailed_description"]
+    #binding.pry
+  end
+
 end
 
-Scraper.scrape_top_sellers("http://store.steampowered.com/")
-Scraper.scrape_game_page("http://store.steampowered.com/app/311210/")
+#Scraper.scrape_top_sellers("http://store.steampowered.com/")
+#Scraper.scrape_game_page("http://store.steampowered.com/app/220200/")
+#Scraper.get_game_info("393380")
