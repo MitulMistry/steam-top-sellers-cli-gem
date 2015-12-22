@@ -17,15 +17,12 @@ class Scraper
         price: item.css("div.discount_final_price").text,
         genres: item.css("div.tab_item_top_tags").text,
         #REFACTOR:
-        url: item.css("a.tab_item_overlay").collect{ |link| link['href'] }.join
-        #name: card.css(".student-name").text, #uses css to select the appropriate data
-        #location: card.css(".student-location").text,
-        #profile_url: "#{index_url}/#{card.css("a").collect{ |link| link['href'] }.join}" #ugly chained command to get the url
+        url: item.css("a.tab_item_overlay").collect{ |link| link['href'] }.join,
         }
     end
 
     #binding.pry
-
+    return_array
   end
 
   def self.scrape_game_page(game_url)
@@ -33,11 +30,29 @@ class Scraper
     doc = Nokogiri::HTML(open(game_url)) #uses open-uri to open the url, then uses Nokogiri to parse in the html which we will then use to scrape data
 
     #PARSE PAGE FOR DATA
-    
-    binding.pry
+    return_hash = {
+      description: doc.css("div.game_description_snippet").text,
+      user_reviews: doc.css("div.glance_ctn div.glance_ctn_responsive_left").text,
+      release_date: doc.css("div.release_date span.date").text
+      }
 
+    #NEED TO FIX THIS:
+    return_hash[:user_reviews].gsub!("User reviews:", "").gsub!("Release Date:", "")#(/User reviews:|Release Date:|.{13}$/, "") #formats user review text - gets rid of "User reviews" string and dates (with last 13 characters)
+
+    details_block = doc.css("div.game_details div.details_block")[0] #gets the first details_block on the page which contains the developer and publisher information
+    detail_links = details_block.css("a").collect{ |link| link.text } #collects the text of the links in the block
+
+    return_hash[:developer] = detail_links[detail_links.size - 1] #the developer is the second to last link in the links collected above
+    return_hash[:publisher] = detail_links.last #the publisher is the last link in the links collected above
+
+    #.gsub(/\\r|\\n|\\t/, '')
+    return_hash.each { |key, value| value.gsub!( /\t|\n|\r/, "") } #normalizes text by getting rid of all the trailing and interstitial whitespace: \t, \n, \r with a regex
+
+    #binding.pry
+    return_hash
   end
 
 end
 
 Scraper.scrape_top_sellers("http://store.steampowered.com/")
+Scraper.scrape_game_page("http://store.steampowered.com/app/311210/")
