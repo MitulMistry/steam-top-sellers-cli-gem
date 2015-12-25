@@ -1,7 +1,7 @@
 require_relative "scraper.rb"
 
 class Game
-  attr_accessor :steam_id, :title, :price, :genres, :url, :description, :user_reviews, :release_date, :developer, :publisher
+  attr_accessor :steam_id, :title, :price, :genres, :website, :description, :user_reviews, :release_date, :developer, :publisher
   @@all = []
 
   def initialize(game_hash)
@@ -32,20 +32,19 @@ class Game
         })
     end
 
+    #updates list of games with more detailed info by getting Steam API data for each individual game
     @@all.each do |game|
-=begin
-      hash = get_game_info(game[:steam_id])
-      game[:genres] =
-      game[:url] =
-      game[:description] =
-      game[:user_reviews] =
-      game[:release_date] =
-      game[:developer] =
-      game[:publisher] =
-=end
+      hash = Scraper.get_game_info(game.steam_id)
+      game.genres = hash["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
+      game.website = hash["website"]
+      game.description = hash["about_the_game"] #potentially large amount of text with html tags like <h2> and \r
+      game.user_reviews = "#{hash["recommendations"]["total"]} recommendations"
+      game.release_date = hash["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
+      game.developer = hash["developers"] #array: ["Offworld Industries"]
+      game.publisher = hash["publishers"] #array: ["Offworld Industries"]
     end
 
-    binding.pry
+    #binding.pry
   end
 
   def self.all
@@ -53,4 +52,4 @@ class Game
   end
 end
 
-Game.create_from_steam_api
+#Game.create_from_steam_api
