@@ -27,24 +27,40 @@ class Game
     hash.each do |item|
       game = self.new({
         steam_id: item["id"].to_i, #sometimes the ids come as strings, so forces into integer
-        title: item["name"],
+        title: item["name"].gsub(/[™®]/, ''), #gets rid of ® ™ characters to make it easier to type in name from list
         price: item["final_price"] / 100.0 #forces conversion from 1099 into 10.99
         })
     end
 
+    #update_all_from_steam_api
+  end
+
+  def self.update_all_from_steam_api
     #updates list of games with more detailed info by getting Steam API data for each individual game
     @@all.each do |game|
-      hash2 = Scraper.get_game_info(game.steam_id)
-      game.genres = hash2["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
-      game.website = hash2["website"]
-      game.description = hash2["about_the_game"] #potentially large amount of text with html tags like <h2> and \r
-      game.user_reviews = "#{hash2['recommendations']['total']} recommendations"
-      game.release_date = hash2["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
-      game.developer = hash2["developers"] #array: ["Offworld Industries"]
-      game.publisher = hash2["publishers"] #array: ["Offworld Industries"]
+      hash = Scraper.get_game_info(game.steam_id)
+      game.genres = hash["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
+      game.website = hash["website"]
+      game.description = hash["about_the_game"] #potentially large amount of text with html tags like <h2> and \r
+      game.user_reviews = "#{hash['recommendations']['total']} recommendations"
+      game.release_date = hash["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
+      game.developer = hash["developers"] #array: ["Offworld Industries"]
+      game.publisher = hash["publishers"] #array: ["Offworld Industries"]
       #sleep(0.25) #sleep to slow down requests and try and avoid a timeout from server
     end
+    #binding.pry
+  end
 
+  def self.update_game_from_steam_api(game)
+    #updates list of games with more detailed info by getting Steam API data for each individual game
+    hash = Scraper.get_game_info(game.steam_id)
+    game.genres = hash["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
+    game.website = hash["website"]
+    game.description = hash["about_the_game"] #potentially large amount of text with html tags like <h2> and \r
+    game.user_reviews = "#{hash['recommendations']['total']} user reviews"
+    game.release_date = hash["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
+    game.developer = hash["developers"] #array: ["Offworld Industries"]
+    game.publisher = hash["publishers"] #array: ["Offworld Industries"]
     #binding.pry
   end
 
