@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require './lib/steam_top_sellers/cli.rb'
-
-CommandLineInteface.new.run
