@@ -1,7 +1,7 @@
 require_relative "game.rb"
 require_relative "scraper.rb"
 
-class CommandLineInteface
+class CommandLineInterface
 
   def run
     Game.create_from_steam_api
@@ -60,8 +60,9 @@ class CommandLineInteface
     puts "Developer: #{game.developer.join(", ")}"
     puts "Publisher: #{game.publisher.join(", ")}"
     puts "Description: #{game.description}"
+    puts "----------------------------------"
   end
 
 end
 
-CommandLineInteface.new.run
+CommandLineInterface.new.run
