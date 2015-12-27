@@ -1,8 +1,6 @@
 require_relative "game.rb"
-require_relative "scraper.rb"
 
 class CommandLineInterface
-
   def run
     Game.create_from_steam_api
     list_games
@@ -62,7 +60,6 @@ class CommandLineInterface
     puts "Description: #{game.description}"
     puts "----------------------------------"
   end
-
 end
 
 CommandLineInterface.new.run
