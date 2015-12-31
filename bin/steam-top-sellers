@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'steam_top_sellers'
+
+CommandLineInterface.new.run

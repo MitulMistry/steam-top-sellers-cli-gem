@@ -7,9 +7,10 @@ class Game
   def initialize(game_hash)
     game_hash.each { |key, value| self.send(("#{key}="), value) } #uses metaprogramming and mass assignment to assign all the values in the hash to this student object via the self.send method
     @@all << self #adds the instance to the class array to keep track of all the instances
+    self
   end
 
-  def self.create_from_steam_api
+  def self.create_from_steam_api #constructor
     #initially populates game objects from Steam Storefront API
     hash = SteamAPIHandler.get_top_sellers
     hash.each do |item|
