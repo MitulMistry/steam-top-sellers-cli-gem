@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'steam_top_sellers'
+require_relative '../lib/steam_top_sellers/cli.rb'
 
 CommandLineInterface.new.run

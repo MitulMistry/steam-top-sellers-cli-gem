@@ -5,8 +5,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.authors       = ["Mitul Mistry"]
   spec.email         = ["MitulMistryArt@gmail.com"]
-  spec.description   = "Top selling games on Steam"
-  spec.summary       = "CLI application that allows you to automatically retrieve top sellers and get more detailed info on each game"
+  spec.description   = "CLI application that allows you to automatically retrieve top sellers and get more detailed info on each game"
+  spec.summary       = "Top selling games on Steam"
   spec.homepage      = "https://github.com/MitulMistry/"
 
   spec.files         = `git ls-files`.split($\)
