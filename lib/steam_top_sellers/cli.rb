@@ -47,19 +47,21 @@ class CommandLineInterface
 
   def print_game(game)
     puts "--------- #{game.title} ---------"
-    if game.release_date["coming_soon"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
-      puts "Released: Coming soon"
+    if game.api_success
+      if game.release_date["coming_soon"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
+        puts "Released: Coming soon"
+      else
+        puts "Released: #{game.release_date["date"]}"
+      end
+      puts "Genres: #{game.genres.collect {|i| i["description"]}.join(", ") }" #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}]
+      puts "Recommendations: #{game.user_reviews}"
+      puts "Website: #{game.website}"
+      puts "Developer: #{game.developer.join(", ")}"
+      puts "Publisher: #{game.publisher.join(", ")}"
+      puts "Description: #{game.description}"
     else
-      puts "Released: #{game.release_date["date"]}"
+      puts "Sorry, no data is currently available on this game."
     end
-    puts "Genres: #{game.genres.collect {|i| i["description"]}.join(", ") }" #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}]
-    puts "Recommendations: #{game.user_reviews}"
-    puts "Website: #{game.website}"
-    puts "Developer: #{game.developer.join(", ")}"
-    puts "Publisher: #{game.publisher.join(", ")}"
-    puts "Description: #{game.description}"
-    puts "----------------------------------"
+      puts "----------------------------------"
   end
 end
-
-CommandLineInterface.new.run

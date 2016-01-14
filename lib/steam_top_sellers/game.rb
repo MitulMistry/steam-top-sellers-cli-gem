@@ -1,11 +1,11 @@
 require_relative "steam_api_handler.rb"
 
 class Game
-  attr_accessor :steam_id, :title, :price, :genres, :website, :description, :user_reviews, :release_date, :developer, :publisher, :list_num
+  attr_accessor :steam_id, :title, :price, :genres, :website, :description, :user_reviews, :release_date, :developer, :publisher, :list_num, :api_success
   @@all = []
 
   def initialize(game_hash)
-    game_hash.each { |key, value| self.send(("#{key}="), value) } #uses metaprogramming and mass assignment to assign all the values in the hash to this student object via the self.send method
+    game_hash.each { |key, value| self.send(("#{key}="), value) } #uses metaprogramming and mass assignment to assign all the values in the hash to this game object via the self.send method
     @@all << self #adds the instance to the class array to keep track of all the instances
     self
   end
@@ -36,14 +36,18 @@ class Game
 
   def self.update_game_from_steam_api(game)
     #updates list of games with more detailed info by getting Steam API data for each individual game
-    hash = SteamAPIHandler.get_game_info(game.steam_id)
-    game.genres = hash["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
-    game.website = hash["website"]
-    game.description = Nokogiri::HTML(hash["about_the_game"]).text #Gets rid of html tags like <h2> and \r
-    game.user_reviews = "#{hash['recommendations']['total']} user reviews"
-    game.release_date = hash["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
-    game.developer = hash["developers"] #array: ["Offworld Industries"]
-    game.publisher = hash["publishers"] #array: ["Offworld Industries"]
+    if hash = SteamAPIHandler.get_game_info(game.steam_id) #assigns hash and checks if it has a value or is nil
+      game.genres = hash["genres"] #array of hashes: [{"id"=>"1", "description"=>"Action"}, {"id"=>"23", "description"=>"Indie"}, {"id"=>"2", "description"=>"Strategy"}, {"id"=>"70", "description"=>"Early Access"}]
+      game.website = hash["website"]
+      game.description = Nokogiri::HTML(hash["about_the_game"]).text #Gets rid of html tags like <h2> and \r
+      hash.has_key?("recommendations") ? game.user_reviews = "#{hash['recommendations']['total']} user reviews" : game.user_reviews = "No reviews yet" # checks to see if there are any reviews yet
+      game.release_date = hash["release_date"] #hash: {"coming_soon"=>false, "date"=>"Dec 14, 2015"}
+      game.developer = hash["developers"] #array: ["Offworld Industries"]
+      game.publisher = hash["publishers"] #array: ["Offworld Industries"]
+      game.api_success = true
+    else
+      game.api_success = false
+    end
   end
 
   #accessor method for the @@all class array

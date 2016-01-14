@@ -14,6 +14,6 @@ class SteamAPIHandler
   def self.get_game_info(steam_id)
     doc = open("http://store.steampowered.com/api/appdetails/?appids=#{steam_id}")#&filters=basic #uses Open-URI to get the JSON file based on steam ID
     data_hash = JSON.load(doc) #loads the JSON data
-    data_hash[steam_id.to_s]["data"] #selects desired part of hash
+    data_hash[steam_id.to_s]["success"] == true ? data_hash[steam_id.to_s]["data"] : nil #selects desired part of hash, or returns nil if no data was acquired from API
   end
 end
