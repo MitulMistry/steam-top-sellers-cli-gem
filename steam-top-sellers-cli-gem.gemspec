@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($\)
   spec.executables   = ["steam-top-sellers"]
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.name          = "now-playing-cli-gem"
+  spec.name          = "steam-top-sellers-cli-gem"
   spec.require_paths = ["lib", "lib/steam_top_sellers"]
   spec.version       = 1.0
   spec.license       = "MIT"
@@ -23,6 +23,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "pry"
-  spec.add_development_dependency "vcr"
-  spec.add_development_dependency "webmock"
 end
