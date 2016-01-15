@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/steam_top_sellers/cli.rb'
+require "bundler/setup"
+require "steam_top_sellers"
 
 CommandLineInterface.new.run

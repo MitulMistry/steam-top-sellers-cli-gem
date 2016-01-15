@@ -1,7 +1,7 @@
-require 'open-uri'
-require 'nokogiri'
-require 'json'
-require 'pry'
+#require 'open-uri'
+#require 'nokogiri'
+#require 'json'
+#require 'pry'
 
 class SteamAPIHandler
   #Steam Storefront API https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI

@@ -1,4 +1,4 @@
-require_relative "steam_api_handler.rb"
+#require_relative "steam_api_handler.rb"
 
 class Game
   attr_accessor :steam_id, :title, :price, :genres, :website, :description, :user_reviews, :release_date, :developer, :publisher, :list_num, :api_success
@@ -7,14 +7,19 @@ class Game
   def initialize(game_hash)
     game_hash.each { |key, value| self.send(("#{key}="), value) } #uses metaprogramming and mass assignment to assign all the values in the hash to this game object via the self.send method
     @@all << self #adds the instance to the class array to keep track of all the instances
-    self
+    self.list_num = @@all.size #sets its list number to its place in the array
+    #self - don't need to return self, initialize is a special method that always returns self
+  end
+
+  def self.does_not_exist?(id)
+    @@all.none?{ |i| id == i.steam_id } #checks to make sure an item with the same steam id doesn't already exist in the @@all class array
   end
 
   def self.create_from_steam_api #constructor
     #initially populates game objects from Steam Storefront API
     hash = SteamAPIHandler.get_top_sellers
     hash.each do |item|
-      if @@all.none?{ |i| item["id"].to_i == i.steam_id } #checks to make sure an item with the same steam id doesn't already exist in the @@all class array
+      if Game.does_not_exist?(item["id"].to_i)
         game = self.new({
           steam_id: item["id"].to_i, #sometimes the ids come as strings, so forces into integer
           title: item["name"].gsub(/[™®]/, ''), #gets rid of ® ™ characters with a regex to make it easier to type in name from list

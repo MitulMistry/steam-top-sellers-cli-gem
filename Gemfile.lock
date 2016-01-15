@@ -1,19 +1,15 @@
 PATH
   remote: .
   specs:
-    now-playing-cli-gem (1.0)
+    steam-top-sellers-cli-gem (1.0)
       json
       nokogiri
 
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.8)
     coderay (1.1.0)
-    crack (0.4.3)
-      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
-    hashdiff (0.2.3)
     json (1.8.3)
     method_source (0.8.2)
     mini_portile2 (2.0.0)
@@ -37,25 +33,17 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    safe_yaml (1.0.4)
     slop (3.6.0)
-    vcr (3.0.1)
-    webmock (1.22.5)
-      addressable (< 2.4.0)
-      crack (>= 0.3.2)
-      hashdiff
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (~> 1.10)
-  now-playing-cli-gem!
   pry
   rake (~> 10.0)
   rspec
-  vcr
-  webmock
+  steam-top-sellers-cli-gem!
 
 BUNDLED WITH
    1.11.2
