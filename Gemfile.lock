@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    steam-top-sellers-cli-gem (1.0)
+    steam-top-sellers (1.0)
       json
       nokogiri
 
@@ -10,11 +10,11 @@ GEM
   specs:
     coderay (1.1.0)
     diff-lcs (1.2.5)
-    json (1.8.3)
+    json (2.0.3)
     method_source (0.8.2)
-    mini_portile2 (2.0.0)
-    nokogiri (1.6.7.1)
-      mini_portile2 (~> 2.0.0.rc2)
+    mini_portile2 (2.1.0)
+    nokogiri (1.7.0.1)
+      mini_portile2 (~> 2.1.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -43,7 +43,7 @@ DEPENDENCIES
   pry
   rake (~> 10.0)
   rspec
-  steam-top-sellers-cli-gem!
+  steam-top-sellers!
 
 BUNDLED WITH
-   1.11.2
+   1.14.2

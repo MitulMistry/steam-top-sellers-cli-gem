@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($\)
   spec.executables   = ["steam-top-sellers"]
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.name          = "steam-top-sellers-cli-gem"
+  spec.name          = "steam-top-sellers"
   spec.require_paths = ["lib", "lib/steam_top_sellers"]
   spec.version       = 1.0
   spec.license       = "MIT"
