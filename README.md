@@ -5,12 +5,14 @@ This is a simple CLI gem used to find the currently top selling games on the [St
 ## Installation
 
 Clone this GitHub repository, then run:
-$ gem install steam-top-sellers.gem
+
+    $ gem install steam-top-sellers.gem'
 
 ## Usage
 
 Run:
-$ steam-top-sellers
+
+    $ steam-top-sellers
 
 Then follow on-screen instructions.
 
