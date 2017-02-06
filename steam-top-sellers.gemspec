@@ -17,10 +17,10 @@ Gem::Specification.new do |spec|
   spec.version       = 1.0
   spec.license       = "MIT"
 
-  spec.add_dependency "nokogiri"
-  spec.add_dependency "json"
+  spec.add_dependency "nokogiri", "~> 1.6", ">= 1.6.8"
+  spec.add_dependency "json", "~> 1.8", ">= 1.8.3"
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "pry"
+  spec.add_development_dependency "rspec", "~> 3.5"
+  spec.add_development_dependency "pry", "~> 0.10.4"
 end
