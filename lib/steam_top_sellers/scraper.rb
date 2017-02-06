@@ -1,8 +1,3 @@
-#require 'open-uri'
-#require 'nokogiri'
-#require 'json'
-#require 'pry'
-
 class Scraper
 
   def self.scrape_top_sellers(store_url)

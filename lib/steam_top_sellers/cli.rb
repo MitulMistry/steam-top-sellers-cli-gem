@@ -1,5 +1,3 @@
-#require_relative "game.rb"
-
 class CommandLineInterface
   def run
     Game.create_from_steam_api
@@ -52,7 +50,7 @@ class CommandLineInterface
   def find_by_list_number(number)
     Game.all.detect {|i| i.list_num == number}
   end
-  
+
   #retrieves the game from the Game class's @@all array based on title
   def find_by_name(name)
     Game.all.detect {|i| i.title.downcase == name}

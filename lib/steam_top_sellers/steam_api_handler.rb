@@ -1,8 +1,3 @@
-#require 'open-uri'
-#require 'nokogiri'
-#require 'json'
-#require 'pry'
-
 class SteamAPIHandler
   #Steam Storefront API https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
   def self.get_top_sellers

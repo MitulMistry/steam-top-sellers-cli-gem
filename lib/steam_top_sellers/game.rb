@@ -1,5 +1,3 @@
-#require_relative "steam_api_handler.rb"
-
 class Game
   attr_accessor :steam_id, :title, :price, :genres, :website, :description, :user_reviews, :release_date, :developer, :publisher, :list_num, :api_success
   @@all = []
