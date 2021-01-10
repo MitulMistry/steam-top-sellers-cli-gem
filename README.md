@@ -1,20 +1,22 @@
 # Steam Top Sellers
 
-This is a simple CLI gem used to find the currently top selling games on the [Steam Store](http://store.steampowered.com/).
+This is a simple Ruby CLI gem used to find the currently top selling games on the [Steam Store](http://store.steampowered.com/). 
 
 ## Installation
 
-Clone this GitHub repository, then run:
+To install the application as a gem, clone this GitHub repository, then run:
 
-    $ gem install steam-top-sellers.gem
+    $ gem install steam-top-sellers
 
 ## Usage
 
-Run:
+Once installed as a gem, run:
 
     $ steam-top-sellers
 
 Then follow on-screen instructions.
+
+You can also run `bin/steam-top-sellers` to run the application without installing the gem. To build a new version of the gem, run `gem build`.
 
 ## License
 
